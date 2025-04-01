@@ -1,25 +1,47 @@
-var { graphql, buildSchema } = require("graphql")
+const { buildSchema } = require("graphql")
+const express = require('express');
+const { createHandler } = require("graphql-http/lib/use/express")
+
+const { ruruHTML } = require("ruru/server")
+
+// express server
+const app = express();
  
 // Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`)
+var schema = buildSchema(
+    `
+      type Query {
+        hello: String
+        name: String,
+        age: Int
+      }
+    `
+)
+
+
+ 
+// Serve the GraphiQL IDE.
+app.get("/", (_req, res) => {
+  res.type("html")
+  res.end(ruruHTML({ endpoint: "/graphql" }))
+})
  
 // The rootValue provides a resolver function for each API endpoint
 var rootValue = {
   hello() {
     return "Hello world!"
+  },
+  name() {
+    return "Himanshu"
   }
 }
- 
-// Run the GraphQL query '{ hello }' and print out the response
-const query = "{ hello }"
-graphql({
+
+// lets create a server and answer real time queries
+app.use('/graphql', createHandler({
   schema: schema,
-  source: query,
   rootValue: rootValue
-}).then(response => {
-  console.log(response)
-})
+}));
+
+app.listen(4000, () => {
+  console.log('Running a GraphQL API server at http://localhost:4000/graphql');
+});
