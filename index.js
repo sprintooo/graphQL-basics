@@ -2,8 +2,6 @@ const { buildSchema } = require("graphql")
 const express = require('express');
 const { createHandler } = require("graphql-http/lib/use/express")
 
-const { ruruHTML } = require("ruru/server")
-
 // express server
 const app = express();
  
@@ -12,19 +10,10 @@ var schema = buildSchema(
     `
       type Query {
         hello: String
-        name: String,
-        age: Int
+        name: String
       }
     `
 )
-
-
- 
-// Serve the GraphiQL IDE.
-app.get("/", (_req, res) => {
-  res.type("html")
-  res.end(ruruHTML({ endpoint: "/graphql" }))
-})
  
 // The rootValue provides a resolver function for each API endpoint
 var rootValue = {
