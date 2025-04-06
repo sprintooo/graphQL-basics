@@ -5,16 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "epxress": "^0.0.1-security",
     "express": "^5.1.0",
-    "graphql": "^16.10.0"
+    "graphql": "^16.10.0",
+    "graphql-http": "^1.22.4",
+    "rur": "^0.2.2",
+    "ruru": "^2.0.0-beta.19"
   },
   "devDependencies": {
-    "nodemon": "^3.0.3"
+    "nodemon": "^3.1.9"
   }
 }
