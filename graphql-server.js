@@ -6,22 +6,32 @@ const { createHandler } = require("graphql-http/lib/use/express")
 const app = express();
  
 // Construct a schema, using GraphQL schema language
-var schema = buildSchema(
-    `
-      type Query {
-        hello: String
-        name: String
-      }
-    `
-)
+var schema = buildSchema(`
+    type Query {
+      user: User
+      role: String
+    }
+    
+    type User {
+      name: String
+      age: Int
+      email: String
+    }
+`)
+
+
  
 // The rootValue provides a resolver function for each API endpoint
 var rootValue = {
-  hello() {
-    return "Hello world!"
+  user(){
+    return {
+      "name": "Himanshu",
+      "age": 25,
+      "email":2
+    }
   },
-  name() {
-    return "Himanshu"
+  role() {
+    return "USER"
   }
 }
 
